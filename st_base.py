@@ -11,6 +11,7 @@ st.header("Simulation App")
 today = dt.date.today()
 
 function_list = ["Monte Carlo", "Bootstrap"]
+graph_selections = ["Streamlit", "Matplotlib (JPEG)"]
 
 before = today - dt.timedelta(days=3653)
 start_date = st.sidebar.date_input('Start date', before)
@@ -89,25 +90,32 @@ if status_radio == "run":
         mc_col3, mc_col4 = st.columns(2)
         
         with mc_col3:
-            path_numbers = st.number_input("Number of paths (Default 10,000)", 10000)
+            path_numbers = st.number_input("Number of paths (Default 10,000)", 2000)
             
         with mc_col4:
-            estimate_value = st.number_input("Number of {} to estimate".format(quote_frequency), 30)
-            
-        mc_radio = st.radio('Please click run when you are ready to run the Monte Carlo Simulation.', ('stop', 'run'))
+            estimate_value = st.number_input("Number of {} to estimate".format(quote_frequency), 252)
+        
+        mc_col5, mc_col6 = st.columns(2)
+        
+        with mc_col5: 
+           mc_graph_type = st.selectbox("select an output for Monte Carlo graphs", graph_selections)
+           
+        with mc_col6:
+            mc_radio = st.radio('Please click run when you are ready to run the Monte Carlo Simulation.', ('stop', 'run'))
         
         if mc_radio == "run":
-            monte_carlo = MonteCarlo(ticker, quote_frequency, distribution_type, input_mean, input_standard_deviation, path_numbers, estimate_value, df[quote_type][len(df) -1])
+            monte_carlo = MonteCarlo(ticker, quote_frequency, distribution_type, input_mean, input_standard_deviation, 
+                                     path_numbers, estimate_value, df[quote_type][len(df) -1], mc_graph_type)
             
     if sidebar_function == "Bootstrap":
         
         bootstrap_col1, bootstrap_col2, bootstrap_col3 = st.columns(3)
         
         with bootstrap_col1:
-            input_simulations = st.number_input("Insert the number of simulations", 10000)
+            input_simulations = st.number_input("Insert the number of simulations", 2000)
             
         with bootstrap_col2:
-            estimate_value = st.number_input("Number of {} to estimate".format(quote_frequency), 30)
+            estimate_value = st.number_input("Number of {} to estimate".format(quote_frequency), 252)
             
         with bootstrap_col3:
             quote_type = st.selectbox("Select a quote", quote_list) 

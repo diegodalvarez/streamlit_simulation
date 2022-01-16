@@ -33,16 +33,27 @@ class BootStrap:
             
             sample_list = []
             
+            if j % 2 == 0:
+                st.write("completed {} simulations".format(j))
+            
             for i in range(sample_size):
                 sample_list.append(random.choices(self.df)[0])
                 
             output_df[j] = sample_list
-            
         output_cumsum = output_df.cumsum()
         
+        st.write("output df")
+        st.write(output_df)
+        output_df.to_csv("output.csv")
+        
+        st.write("output cumsum")
+        st.write(output_cumsum)
+        output_cumsum.to_csv("output_cumsum.csv")
+        
+        '''
         st.subheader("{} Bootstrapping {} {} estimation with {} simulated return".format(self.ticker, self.sample_size, self.quote_frequency, self.input_simulations))
         st.line_chart(output_df)
         
         st.subheader("{} Bootstrapping {} {} estimation with {} simulated cumulative returns".format(self.ticker, self.sample_size, self.quote_frequency, self.input_simulations))
         st.line_chart(output_cumsum)
-        
+        '''
