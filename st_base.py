@@ -11,7 +11,7 @@ st.header("Simulation App")
 today = dt.date.today()
 
 function_list = ["Monte Carlo", "Bootstrap"]
-graph_selections = ["Streamlit", "Matplotlib (JPEG)"]
+graph_selections = ["Matplotlib (JPEG)", "Streamlit"]
 
 before = today - dt.timedelta(days=3653)
 start_date = st.sidebar.date_input('Start date', before)
@@ -57,8 +57,8 @@ if status_radio == "run":
             
             df = yf.download(ticker, start_date, end_date, interval = "1mo")
             quote_frequency = "months"
-           
-        st.dataframe(df)
+        
+        st.write(df)
         quote_list = df.columns[:-1]
     
     with col2:

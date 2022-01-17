@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-
-import plotly.express as px
 import matplotlib.pyplot as plt
 
 class MonteCarlo:
@@ -60,9 +58,11 @@ class MonteCarlo:
                     
                 with mc_output_col2:
                     
+                    quote_frequency_dict = {"days": "Daily", "weeks": "weekly", "months": "Monthly"}
+                    
                     st.header('Output Statistics')
-                    st.subheader("Returns Mean")
+                    st.subheader("{} Returns Mean".format(quote_frequency_dict[self.quote_frequency]))
                     st.text("{}%".format(round(monte_carlo_dist.mean() * 100,3)))
                     st.text("")
-                    st.subheader("Returns Standard Deviation")
+                    st.subheader("{} Returns Standard Deviation".format(quote_frequency_dict[self.quote_frequency]))
                     st.text(round(monte_carlo_dist.std(),3))
