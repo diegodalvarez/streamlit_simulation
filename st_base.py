@@ -9,9 +9,9 @@ from monte_carlo import *
 st.set_page_config(layout = "wide")
 st.header("Simulation App")
 today = dt.date.today()
-
+ 
 function_list = ["Monte Carlo", "Bootstrap"]
-graph_selections = ["Matplotlib (JPEG)", "Streamlit"]
+graph_selections = ["Matplotlib (JPEG)", "Streamlit (Interactive)"]
 
 before = today - dt.timedelta(days=3653)
 start_date = st.sidebar.date_input('Start date', before)
@@ -90,7 +90,7 @@ if status_radio == "run":
         mc_col3, mc_col4 = st.columns(2)
         
         with mc_col3:
-            path_numbers = st.number_input("Number of paths (Default 10,000)", 2000)
+            path_numbers = st.number_input("Number of paths (Default 2,000)", 2000)
             
         with mc_col4:
             estimate_value = st.number_input("Number of {} to estimate".format(quote_frequency), 252)
