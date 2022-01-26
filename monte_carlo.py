@@ -25,6 +25,9 @@ class MonteCarlo:
             monte_carlo_cumsum = monte_carlo.cumsum()
             monte_carlo_dist = monte_carlo.iloc[len(monte_carlo) - 1]
             
+            #simulated price path
+            price_paths = (1 + monte_carlo_cumsum) * self.close_price
+            
             #monte_carlo.to_csv('monte_carlo.csv')
             #monte_carlo_cumsum.to_csv('monte_carlo_cumsum.csv')
             
@@ -71,6 +74,12 @@ class MonteCarlo:
                 mc_cumsum_axes.set_title("{} Monte Carlo {} {} estimation with {} simulated cumulative return".format(self.ticker, self.estimation_time, self.quote_frequency, self.number_of_paths))
                 mc_cumsum_axes.grid()
                 st.pyplot(mc_figure_cumsum)
+                
+                price_path_figure, price_path_axes = plt.subplots(figsize = (24,10))
+                price_path_axes.plot(price_paths, color = "green", alpha = 0.2)
+                price_path_axes.set_title("{} Monte Carlo {} {} estimation with {} simulated price paths".format(self.ticker, self.estimation_time, self.quote_frequency, self.number_of_paths))
+                price_path_axes.grid()
+                st.pyplot(price_path_figure)
                 
                 mc_output_col1, mc_output_col2 = st.columns(2)
                 
